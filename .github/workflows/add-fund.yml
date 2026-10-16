@@ -1,0 +1,166 @@
+name: Add or remove a fund
+
+# The phone front door. Everything here is driven from the Actions tab of the GitHub mobile
+# app: pick an action, fill in one or two boxes, tap Run workflow, read the run summary.
+#
+# This workflow NEVER touches site/data.json. After a successful change to config.json it
+# dispatches "Finan daily check" (daily.yml), which is the approved publish path and stays
+# exactly as it is. If the dispatch is refused, the summary tells you to tap that workflow
+# yourself - one tap when it works, two when it does not, never a failed run over it.
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "search = just look, add = start tracking, remove = stop tracking"
+        type: choice
+        required: false
+        default: search
+        options:
+          - search
+          - add
+          - remove
+      query:
+        description: "search only: the fund name, e.g. VanEck Semiconductor"
+        type: string
+        required: false
+        default: ""
+      ticker:
+        description: "add/remove only: the ticker from a search row, e.g. VVSM.DE"
+        type: string
+        required: false
+        default: ""
+      display_name:
+        description: "add only: the card title (blank = the official name, tidied)"
+        type: string
+        required: false
+        default: ""
+      fund_held:
+        description: "add only: the fund you actually buy (blank = Watchlist (not held))"
+        type: string
+        required: false
+        default: ""
+      invest_pct:
+        description: "add only: this fund's own INVEST threshold, e.g. 18 (blank = 10)"
+        type: string
+        required: false
+        default: ""
+      strong_invest_pct:
+        description: "add only: its STRONG INVEST threshold, e.g. 30 (blank = 20)"
+        type: string
+        required: false
+        default: ""
+
+permissions:
+  contents: write      # commit config.json
+  actions: write       # the last step only: dispatch "Finan daily check"
+
+concurrency:
+  # Deliberately the SAME lane as daily.yml: one of the two runs, the other waits. A fund
+  # being added while the daily job computes signals would otherwise race over config.json.
+  group: finan-daily
+  cancel-in-progress: false
+
+jobs:
+  manage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      TZ: Europe/Madrid        # the "Verified <date>" in a new ticker_note should be the
+                               # user's date, as on the Windows PC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Full history: the commit step's rebase-and-retry needs a merge base.
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      # Same cache as daily.yml, so a search reuses the price history already downloaded
+      # instead of pulling every candidate's full history from scratch.
+      - uses: actions/cache@v4
+        with:
+          path: data
+          key: finan-prices-${{ github.run_id }}
+          restore-keys: finan-prices-
+      - run: python -m pip install -r requirements.txt
+
+      # Every input below reaches the shell through env: and is read as "$VAR". None of them
+      # is interpolated as ${{ }} inside a run: block - `query`, `ticker` and the names are
+      # free text typed on a phone keyboard, and interpolation would paste them into the
+      # script itself.
+      - name: Search for a fund
+        if: inputs.action == 'search'
+        env:
+          QUERY: ${{ inputs.query }}
+        run: |
+          status=0
+          python scripts/fund_search.py search "$QUERY" --format markdown \
+            > "$RUNNER_TEMP/search.md" 2>&1 || status=$?
+          cat "$RUNNER_TEMP/search.md" >> "$GITHUB_STEP_SUMMARY"
+          exit $status
+
+      - name: Add or remove the fund
+        if: inputs.action != 'search'
+        env:
+          ACTION: ${{ inputs.action }}
+          TICKER: ${{ inputs.ticker }}
+          DISPLAY_NAME: ${{ inputs.display_name }}
+          FUND_HELD: ${{ inputs.fund_held }}
+          INVEST_PCT: ${{ inputs.invest_pct }}
+          STRONG_INVEST_PCT: ${{ inputs.strong_invest_pct }}
+        run: |
+          # The optional flags are APPENDED only when the box was filled in: the two
+          # percentages are parsed as numbers, so passing an empty string would be a usage
+          # error rather than "not given".
+          args=("$ACTION" --ticker "$TICKER" --format markdown)
+          if [ "$ACTION" = "add" ]; then
+            if [ -n "$DISPLAY_NAME" ]; then
+              args+=(--display-name "$DISPLAY_NAME")
+            fi
+            if [ -n "$FUND_HELD" ]; then
+              args+=(--fund-held "$FUND_HELD")
+            fi
+            if [ -n "$INVEST_PCT" ]; then
+              args+=(--invest-pct "$INVEST_PCT")
+            fi
+            if [ -n "$STRONG_INVEST_PCT" ]; then
+              args+=(--strong-invest-pct "$STRONG_INVEST_PCT")
+            fi
+          fi
+          status=0
+          python scripts/manage_funds.py "${args[@]}" \
+            > "$RUNNER_TEMP/manage.md" 2>&1 || status=$?
+          # The summary is written whatever happened, so a refusal is readable on the phone,
+          # then the tool's own exit code ends the step. A refused run stops here: the two
+          # steps below are guarded by success(), not always().
+          cat "$RUNNER_TEMP/manage.md" >> "$GITHUB_STEP_SUMMARY"
+          exit $status
+
+      - name: Commit config.json
+        if: success() && inputs.action != 'search'
+        env:
+          ACTION: ${{ inputs.action }}
+          TICKER: ${{ inputs.ticker }}
+        run: |
+          git -c user.name="github-actions[bot]" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -m "Fund $ACTION: $TICKER" -- config.json
+          git push || {
+            echo "::warning::push rejected, rebasing onto origin and retrying once"
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+            git push
+          }
+
+      - name: Queue a refresh of the app
+        if: success() && inputs.action != 'search'
+        continue-on-error: true      # a refused dispatch is a second tap, not a failure
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if gh workflow run daily.yml --ref "${GITHUB_REF_NAME}"; then
+            echo "config.json is committed and a refresh run has been queued - the app shows the new fund in a minute or two." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "config.json is committed, but the refresh could not be started from here: open **Finan daily check -> Run workflow** to refresh the app now." >> "$GITHUB_STEP_SUMMARY"
+          fi

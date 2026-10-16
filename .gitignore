@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+data/
+logs/
+report.html
+secrets/
+*vapid*private*
+site/*.tmp
+.agents/
+.DS_Store
+Thumbs.db

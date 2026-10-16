@@ -1,0 +1,41 @@
+{
+  "indices": [
+    {"name": "MSCI World", "ticker": "EUNL.DE",
+     "fund_held": "Fidelity MSCI World Index Fund P-ACC-EUR (IE00BYX5NX33)",
+     "ticker_note": "iShares Core MSCI World, Xetra, EUR. Verified 2026-10-09. EUR alternative: IWDA.AS. SWDA.L is priced in GBX - do not use."},
+    {"name": "MSCI World Small Cap", "ticker": "IUSN.DE",
+     "fund_held": "Vanguard Global Small-Cap Index Fund EUR Acc (IE00B42W3S00)",
+     "ticker_note": "iShares MSCI World Small Cap, Xetra, EUR. Verified 2026-10-09. WSML.L is priced in GBX - do not use. IUSN.AS does not exist."},
+    {"name": "MSCI Emerging Markets", "ticker": "IS3N.DE",
+     "fund_held": "Vanguard Emerging Markets Stock Index Fund EUR Acc (IE0031786696)",
+     "ticker_note": "iShares Core MSCI EM IMI, Xetra, EUR. Verified 2026-10-09. EUR alternative: EMIM.AS. EIMI.L is priced in GBX - do not use."}
+  ],
+  "thresholds": {
+    "ath_drawdown_invest_pct": 10.0,
+    "ath_drawdown_strong_invest_pct": 20.0,
+    "high_52w_drawdown_pct": 10.0,
+    "flag_below_sma200": true
+  },
+  "contribution_reminder_day": 1,
+  "notification_time": "09:00",
+  "app_name": "Finan",
+  "site": {
+    "schedule_cron_utc": "30 18 * * 1-5",
+    "schedule_note": "Weekdays after the European close: 20:30 Madrid in summer, 19:30 in winter",
+    "app_url": "https://dashpulseco.github.io/Finance/"
+  },
+  "notifications": {
+    "web_push": {
+      "enabled": true,
+      "vapid_subject": "https://dashpulseco.github.io",
+      "ttl_seconds": 86400,
+      "urgency": "normal"
+    },
+    "ntfy": {
+      "enabled": false,
+      "server": "https://ntfy.sh",
+      "priority": "default",
+      "tags": "chart_with_downwards_trend"
+    }
+  }
+}

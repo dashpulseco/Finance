@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f141a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Finan">
+<meta name="description" content="Daily check on whether the index funds are far enough below their all-time high.">
+<title>Finan</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+<link rel="icon" href="./icons/icon-192.png">
+<link rel="stylesheet" href="./app.css">
+<script src="./app.js" defer></script>
+</head>
+<body>
+<header>
+  <h1>Finan</h1>
+  <p id="asof" class="muted"></p>
+</header>
+<main>
+  <div id="banner" class="banner" hidden></div>
+  <section id="overall" class="card card--overall" aria-live="polite"></section>
+  <p id="contribution" class="badge" hidden></p>
+  <div id="cards"></div>
+  <section class="card" id="notify-panel">
+    <h2>iPhone notifications</h2>
+    <p id="notify-state" role="status" aria-live="polite"></p>
+    <button id="notify-btn" type="button">Enable iPhone notifications</button>
+    <div id="sub-box" hidden>
+      <p>Paste this into the <code>PUSH_SUBSCRIPTIONS</code> repository secret (as a one-element
+         JSON array):</p>
+      <label class="visually-hidden" for="sub-json">Push subscription JSON</label>
+      <textarea id="sub-json" readonly rows="6" spellcheck="false"></textarea>
+      <button id="copy-btn" type="button">Copy</button>
+    </div>
+  </section>
+</main>
+<footer>
+  <p id="next-check"></p>
+  <p id="contribution-note" class="muted"></p>
+  <details id="legend">
+    <summary>What these numbers mean</summary>
+    <ul>
+      <li><strong>Below all-time high</strong> - how far today's close sits under the highest
+          close the proxy ETF has ever reached, as a percentage.</li>
+      <li><strong>INVEST signal</strong> - the drawdown has reached
+          <span id="legend-invest">the configured</span> below the all-time high. That is the
+          default; a fund with its own threshold says so on its card.</li>
+      <li><strong>STRONG INVEST signal</strong> - the drawdown has reached
+          <span id="legend-strong">the configured</span> below the all-time high, again as the
+          default for any fund that does not set its own.</li>
+      <li><strong>52w high</strong> - distance below the highest close of the last 52 weeks. It is
+          listed as a supporting reason once it reaches
+          <span id="legend-52w">the configured threshold</span>.</li>
+      <li><strong>200-day SMA</strong> - today's close against the average of the last 200 closes.
+          <span id="legend-sma200"></span></li>
+      <li><strong>1 month</strong> and <strong>YTD</strong> - change since roughly a month ago and
+          since the last close of last year.</li>
+      <li><strong>Sparkline</strong> - drawdown from the all-time high over about the last three
+          years, drawn from weekly closes. The two dashed lines are that card's own INVEST and
+          STRONG INVEST thresholds, which are the defaults above unless the card says otherwise.
+          </li>
+    </ul>
+  </details>
+  <p class="muted">Rule-based reminder, not investment advice. Prices are closes of EUR-listed ETF
+     proxies, not fund NAVs.</p>
+</footer>
+</body>
+</html>

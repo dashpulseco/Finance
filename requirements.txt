@@ -1,0 +1,34 @@
+# What the cloud job (GitHub Actions, Linux) installs. No winotify, matplotlib or Pillow:
+# finan/report.py is imported only by tracker.py and scripts/gen_icons.py never runs in CI.
+# Windows users install requirements-windows.txt instead, which includes this file.
+#
+# pandas/numpy are pre-installed on the Windows host; pinned here because CI has neither.
+# All pins below resolve to a manylinux_2_28 (or older) cp312 wheel except http-ece, which has
+# no wheel at all and is built from its sdist - pure Python, so no compiler is needed.
+pandas==3.0.1
+numpy==2.4.2
+yfinance==1.7.0
+requests==2.33.1
+pywebpush==2.2.1          # 2.4+ requires cryptography>=47 and would upgrade the host's 45.x
+py-vapid==1.9.2           # 1.9.3+ requires cryptography>=46, same reason
+http-ece==1.2.1           # transitive via pywebpush; sdist only, so pinned explicitly
+cryptography==45.0.7      # transitive; pinned to what the host already has, so pip is a no-op
+aiohttp==3.14.1           # transitive via pywebpush; pinned for CI reproducibility
+
+# Transitive dependencies that ship COMPILED extension modules, pinned per FR6.4 to the versions
+# the host already has, so pip stays a no-op here and CI cannot drift to a different build.
+# Below cryptography / requests / aiohttp (the Web Push chain):
+cffi==2.0.0
+charset-normalizer==3.4.7
+multidict==6.7.1
+yarl==1.24.2
+frozenlist==1.8.0
+propcache==0.5.2
+# Below yfinance (predates this change; compiled and previously unpinned):
+lxml==6.1.1
+protobuf==7.36.2
+curl_cffi==0.16.3
+websockets==17.1
+# Everything else in the closure is pure Python and deliberately left unpinned (aiohappyeyeballs,
+# aiosignal, attrs, beautifulsoup4, certifi, idna, multitasking, peewee, platformdirs, pycparser,
+# python-dateutil, pytz, six, soupsieve, typing-extensions, tzdata, urllib3).

@@ -1,0 +1,81 @@
+name: Finan daily check
+
+on:
+  schedule:
+    # Cron is ALWAYS UTC. The user is in Madrid: UTC+2 in summer (CEST), UTC+1 in winter (CET),
+    # so 18:30 UTC arrives at 20:30 Madrid from late March to late October and 19:30 for the rest
+    # of the year. Both are comfortably after the 17:30 Xetra close, so the day's close is final.
+    # There is no DST-aware cron, so the local arrival time shifts by an hour twice a year.
+    #
+    # THIS LINE IS THE SCHEDULE. If you change it, change site.schedule_cron_utc and
+    # site.schedule_note in config.json to match and re-run deploy.ps1 - the PWA footer reads
+    # those two, not this file, and the compute step below cross-checks them.
+    - cron: "30 18 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write      # commit site/data.json
+  pages: write         # publish to GitHub Pages
+  id-token: write      # required by actions/deploy-pages
+
+concurrency:
+  group: finan-daily
+  cancel-in-progress: false
+
+jobs:
+  daily:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    env:
+      TZ: Europe/Madrid        # makes date.today(), the contribution check and market_data's
+                               # 18:00 intraday guard behave exactly as on the Windows PC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Full history: the commit step's rebase-and-retry needs a merge base, and the default
+          # depth-1 clone only happens to have one when the divergence is a single commit.
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      # data/ is gitignored, so without this the job re-downloads full history every run and can
+      # never fall back to a cached close. Best-effort: a cold cache just means a full download.
+      - uses: actions/cache@v4
+        with:
+          path: data
+          key: finan-prices-${{ github.run_id }}
+          restore-keys: finan-prices-
+      - run: python -m pip install -r requirements.txt
+      - name: Compute signals and write site/data.json
+        env:
+          # Must equal the cron above. daily_job logs a WARNING if config.json disagrees.
+          FINAN_CRON_UTC: "30 18 * * 1-5"
+        run: python jobs/daily_job.py --no-notify
+      - name: Commit site/data.json
+        run: |
+          # Unconditional: the payload carries generated_at and schedule.next_check, so it differs
+          # on every run by construction - there is nothing for an "unchanged" guard to skip.
+          git -c user.name="github-actions[bot]" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -m "Daily data $(date -u +%Y-%m-%d)" -- site/data.json
+          git push || {
+            echo "::warning::push rejected, rebasing onto origin and retrying once"
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+            git push
+          }
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deploy
+        uses: actions/deploy-pages@v4
+      - name: Send the daily notification
+        env:
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
+          PUSH_SUBSCRIPTIONS: ${{ secrets.PUSH_SUBSCRIPTIONS }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python jobs/daily_job.py --notify-only

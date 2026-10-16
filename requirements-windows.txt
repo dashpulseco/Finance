@@ -1,0 +1,6 @@
+# What to install on this Windows host: everything the cloud job needs, plus the local-only extras.
+#   py -3 -m pip install -r requirements-windows.txt
+-r requirements.txt
+winotify==1.1.0           # Windows-only toast backend; not installable/needed on Linux
+matplotlib==3.11.2        # finan/report.py (report.html charts); imported only by tracker.py
+Pillow==12.2.0            # scripts/gen_icons.py, a one-off host script; also a matplotlib dep
