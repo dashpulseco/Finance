@@ -1,6 +1,6 @@
 {
  "schema_version": 2,
- "generated_at": "2026-10-16T23:27:01+02:00",
+ "generated_at": "2026-10-20T00:31:21+02:00",
  "data_as_of": "2026-10-16",
  "app_name": "Finan",
  "app_url": "https://dashpulseco.github.io/Finance/",
@@ -20,7 +20,7 @@
  "schedule": {
   "cron_utc": "30 18 * * 1-5",
   "note": "Weekdays after the European close: 20:30 Madrid in summer, 19:30 in winter",
-  "next_check": "2026-10-19T18:30:00+00:00"
+  "next_check": "2026-10-20T18:30:00+00:00"
  },
  "indices": [
   {
