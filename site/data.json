@@ -1,7 +1,7 @@
 {
  "schema_version": 2,
- "generated_at": "2026-11-11T00:35:43+01:00",
- "data_as_of": "2026-11-09",
+ "generated_at": "2026-11-12T01:53:48+01:00",
+ "data_as_of": "2026-11-10",
  "app_name": "Finan",
  "app_url": "https://dashpulseco.github.io/Finance/",
  "headline": "Finan: INVEST signal on 1 of 3 indices",
@@ -20,7 +20,7 @@
  "schedule": {
   "cron_utc": "30 18 * * 1-5",
   "note": "Weekdays after the European close: 20:30 Madrid in summer, 19:30 in winter",
-  "next_check": "2026-11-11T18:30:00+00:00"
+  "next_check": "2026-11-12T18:30:00+00:00"
  },
  "indices": [
   {
@@ -28,17 +28,17 @@
    "fund_held": "Fidelity MSCI World Index Fund P-ACC-EUR (IE00BYX5NX33)",
    "ticker": "EUNL.DE",
    "currency": "EUR",
-   "last_close": 128.45,
-   "last_date": "2026-11-09",
+   "last_close": 128.65,
+   "last_date": "2026-11-10",
    "ath": 132.25,
    "ath_date": "2026-10-12",
-   "below_ath_pct": 2.9,
+   "below_ath_pct": 2.7,
    "high_52w": 132.25,
-   "below_52w_pct": 2.9,
-   "sma200": 121.81,
-   "vs_sma200_pct": 5.4,
-   "change_1m_pct": -2.4,
-   "ytd_pct": 14.9,
+   "below_52w_pct": 2.7,
+   "sma200": 121.9,
+   "vs_sma200_pct": 5.5,
+   "change_1m_pct": -2.3,
+   "ytd_pct": 15.1,
    "ytd_base_date": "2025-12-30",
    "history_start": "2009-09-25",
    "verdict": "No signal",
@@ -48,10 +48,6 @@
    "source": "live",
    "note": "",
    "drawdown_history": [
-    {
-     "date": "2023-11-10",
-     "drawdown_pct": -3.15
-    },
     {
      "date": "2023-11-17",
      "drawdown_pct": -1.67
@@ -677,8 +673,8 @@
      "drawdown_pct": -3.73
     },
     {
-     "date": "2026-11-09",
-     "drawdown_pct": -2.88
+     "date": "2026-11-10",
+     "drawdown_pct": -2.72
     }
    ],
    "thresholds": {
@@ -693,17 +689,17 @@
    "fund_held": "Vanguard Global Small-Cap Index Fund EUR Acc (IE00B42W3S00)",
    "ticker": "IUSN.DE",
    "currency": "EUR",
-   "last_close": 9.18,
-   "last_date": "2026-11-09",
+   "last_close": 9.17,
+   "last_date": "2026-11-10",
    "ath": 9.33,
    "ath_date": "2026-08-17",
-   "below_ath_pct": 1.6,
+   "below_ath_pct": 1.7,
    "high_52w": 9.33,
-   "below_52w_pct": 1.6,
+   "below_52w_pct": 1.7,
    "sma200": 8.77,
-   "vs_sma200_pct": 4.8,
-   "change_1m_pct": 0.9,
-   "ytd_pct": 18.0,
+   "vs_sma200_pct": 4.5,
+   "change_1m_pct": 0.8,
+   "ytd_pct": 17.9,
    "ytd_base_date": "2025-12-30",
    "history_start": "2018-04-26",
    "verdict": "No signal",
@@ -713,10 +709,6 @@
    "source": "live",
    "note": "",
    "drawdown_history": [
-    {
-     "date": "2023-11-10",
-     "drawdown_pct": -17.35
-    },
     {
      "date": "2023-11-17",
      "drawdown_pct": -14.85
@@ -1342,8 +1334,8 @@
      "drawdown_pct": -3.33
     },
     {
-     "date": "2026-11-09",
-     "drawdown_pct": -1.55
+     "date": "2026-11-10",
+     "drawdown_pct": -1.69
     }
    ],
    "thresholds": {
@@ -1358,33 +1350,29 @@
    "fund_held": "Vanguard Emerging Markets Stock Index Fund EUR Acc (IE0031786696)",
    "ticker": "IS3N.DE",
    "currency": "EUR",
-   "last_close": 44.45,
-   "last_date": "2026-11-09",
+   "last_close": 44.55,
+   "last_date": "2026-11-10",
    "ath": 50.69,
    "ath_date": "2026-06-22",
-   "below_ath_pct": 12.3,
+   "below_ath_pct": 12.1,
    "high_52w": 50.69,
-   "below_52w_pct": 12.3,
-   "sma200": 45.48,
-   "vs_sma200_pct": -2.3,
-   "change_1m_pct": -9.1,
-   "ytd_pct": 15.9,
+   "below_52w_pct": 12.1,
+   "sma200": 45.49,
+   "vs_sma200_pct": -2.1,
+   "change_1m_pct": -8.9,
+   "ytd_pct": 16.2,
    "ytd_base_date": "2025-12-30",
    "history_start": "2014-06-11",
-   "verdict": "INVEST signal: 12.3% below ATH",
+   "verdict": "INVEST signal: 12.1% below ATH",
    "tier": "INVEST",
    "level": "invest",
    "supporting": [
-    "12.3% below 52-week high",
-    "2.3% below 200-day MA"
+    "12.1% below 52-week high",
+    "2.1% below 200-day MA"
    ],
    "source": "live",
    "note": "",
    "drawdown_history": [
-    {
-     "date": "2023-11-10",
-     "drawdown_pct": -16.74
-    },
     {
      "date": "2023-11-17",
      "drawdown_pct": -15.96
@@ -2010,8 +1998,8 @@
      "drawdown_pct": -13.49
     },
     {
-     "date": "2026-11-09",
-     "drawdown_pct": -12.31
+     "date": "2026-11-10",
+     "drawdown_pct": -12.1
     }
    ],
    "thresholds": {
