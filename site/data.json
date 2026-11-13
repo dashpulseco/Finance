@@ -1,11 +1,11 @@
 {
  "schema_version": 2,
- "generated_at": "2026-11-13T00:43:24+01:00",
- "data_as_of": "2026-11-11",
+ "generated_at": "2026-11-14T00:44:59+01:00",
+ "data_as_of": "2026-11-12",
  "app_name": "Finan",
  "app_url": "https://dashpulseco.github.io/Finance/",
- "headline": "Finan: no signal today",
- "overall_level": "none",
+ "headline": "Finan: INVEST signal on 1 of 3 indices",
+ "overall_level": "invest",
  "contribution_due": false,
  "contribution_day": 1,
  "data_status": "live",
@@ -20,7 +20,7 @@
  "schedule": {
   "cron_utc": "30 18 * * 1-5",
   "note": "Weekdays after the European close: 20:30 Madrid in summer, 19:30 in winter",
-  "next_check": "2026-11-13T18:30:00+00:00"
+  "next_check": "2026-11-16T18:30:00+00:00"
  },
  "indices": [
   {
@@ -28,17 +28,17 @@
    "fund_held": "Fidelity MSCI World Index Fund P-ACC-EUR (IE00BYX5NX33)",
    "ticker": "EUNL.DE",
    "currency": "EUR",
-   "last_close": 130.96,
-   "last_date": "2026-11-11",
+   "last_close": 131.63,
+   "last_date": "2026-11-12",
    "ath": 132.25,
    "ath_date": "2026-10-12",
-   "below_ath_pct": 1.0,
+   "below_ath_pct": 0.5,
    "high_52w": 132.25,
-   "below_52w_pct": 1.0,
-   "sma200": 121.99,
-   "vs_sma200_pct": 7.3,
+   "below_52w_pct": 0.5,
+   "sma200": 122.09,
+   "vs_sma200_pct": 7.8,
    "change_1m_pct": -0.5,
-   "ytd_pct": 17.2,
+   "ytd_pct": 17.8,
    "ytd_base_date": "2025-12-30",
    "history_start": "2009-09-25",
    "verdict": "No signal",
@@ -673,8 +673,8 @@
      "drawdown_pct": -3.73
     },
     {
-     "date": "2026-11-11",
-     "drawdown_pct": -0.98
+     "date": "2026-11-12",
+     "drawdown_pct": -0.47
     }
    ],
    "thresholds": {
@@ -690,15 +690,15 @@
    "ticker": "IUSN.DE",
    "currency": "EUR",
    "last_close": 9.3,
-   "last_date": "2026-11-11",
+   "last_date": "2026-11-12",
    "ath": 9.33,
    "ath_date": "2026-08-17",
-   "below_ath_pct": 0.3,
+   "below_ath_pct": 0.4,
    "high_52w": 9.33,
-   "below_52w_pct": 0.3,
+   "below_52w_pct": 0.4,
    "sma200": 8.78,
-   "vs_sma200_pct": 5.9,
-   "change_1m_pct": 2.2,
+   "vs_sma200_pct": 5.8,
+   "change_1m_pct": 1.9,
    "ytd_pct": 19.5,
    "ytd_base_date": "2025-12-30",
    "history_start": "2018-04-26",
@@ -1334,8 +1334,8 @@
      "drawdown_pct": -3.33
     },
     {
-     "date": "2026-11-11",
-     "drawdown_pct": -0.33
+     "date": "2026-11-12",
+     "drawdown_pct": -0.35
     }
    ],
    "thresholds": {
@@ -1350,23 +1350,26 @@
    "fund_held": "Vanguard Emerging Markets Stock Index Fund EUR Acc (IE0031786696)",
    "ticker": "IS3N.DE",
    "currency": "EUR",
-   "last_close": 46.07,
-   "last_date": "2026-11-11",
+   "last_close": 45.45,
+   "last_date": "2026-11-12",
    "ath": 50.69,
    "ath_date": "2026-06-22",
-   "below_ath_pct": 9.1,
+   "below_ath_pct": 10.3,
    "high_52w": 50.69,
-   "below_52w_pct": 9.1,
-   "sma200": 45.52,
-   "vs_sma200_pct": 1.2,
-   "change_1m_pct": -5.8,
-   "ytd_pct": 20.1,
+   "below_52w_pct": 10.3,
+   "sma200": 45.54,
+   "vs_sma200_pct": -0.2,
+   "change_1m_pct": -6.8,
+   "ytd_pct": 18.5,
    "ytd_base_date": "2025-12-30",
    "history_start": "2014-06-11",
-   "verdict": "No signal",
-   "tier": null,
-   "level": "none",
-   "supporting": [],
+   "verdict": "INVEST signal: 10.3% below ATH",
+   "tier": "INVEST",
+   "level": "invest",
+   "supporting": [
+    "10.3% below 52-week high",
+    "0.2% below 200-day MA"
+   ],
    "source": "live",
    "note": "",
    "drawdown_history": [
@@ -1995,8 +1998,8 @@
      "drawdown_pct": -13.49
     },
     {
-     "date": "2026-11-11",
-     "drawdown_pct": -9.1
+     "date": "2026-11-12",
+     "drawdown_pct": -10.33
     }
    ],
    "thresholds": {
