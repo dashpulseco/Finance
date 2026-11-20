@@ -1,7 +1,7 @@
 {
  "schema_version": 2,
- "generated_at": "2026-11-19T01:34:39+01:00",
- "data_as_of": "2026-11-17",
+ "generated_at": "2026-11-20T01:44:35+01:00",
+ "data_as_of": "2026-11-18",
  "app_name": "Finan",
  "app_url": "https://dashpulseco.github.io/Finance/",
  "headline": "Finan: INVEST signal on 1 of 3 indices",
@@ -20,7 +20,7 @@
  "schedule": {
   "cron_utc": "30 18 * * 1-5",
   "note": "Weekdays after the European close: 20:30 Madrid in summer, 19:30 in winter",
-  "next_check": "2026-11-19T18:30:00+00:00"
+  "next_check": "2026-11-20T18:30:00+00:00"
  },
  "indices": [
   {
@@ -28,16 +28,16 @@
    "fund_held": "Fidelity MSCI World Index Fund P-ACC-EUR (IE00BYX5NX33)",
    "ticker": "EUNL.DE",
    "currency": "EUR",
-   "last_close": 127.08,
-   "last_date": "2026-11-17",
+   "last_close": 127.11,
+   "last_date": "2026-11-18",
    "ath": 132.25,
    "ath_date": "2026-10-12",
    "below_ath_pct": 3.9,
    "high_52w": 132.25,
    "below_52w_pct": 3.9,
-   "sma200": 122.33,
-   "vs_sma200_pct": 3.9,
-   "change_1m_pct": -2.7,
+   "sma200": 122.41,
+   "vs_sma200_pct": 3.8,
+   "change_1m_pct": -2.6,
    "ytd_pct": 13.7,
    "ytd_base_date": "2025-12-30",
    "history_start": "2009-09-25",
@@ -673,8 +673,8 @@
      "drawdown_pct": -1.37
     },
     {
-     "date": "2026-11-17",
-     "drawdown_pct": -3.91
+     "date": "2026-11-18",
+     "drawdown_pct": -3.89
     }
    ],
    "thresholds": {
@@ -689,17 +689,17 @@
    "fund_held": "Vanguard Global Small-Cap Index Fund EUR Acc (IE00B42W3S00)",
    "ticker": "IUSN.DE",
    "currency": "EUR",
-   "last_close": 9.02,
-   "last_date": "2026-11-17",
+   "last_close": 9.03,
+   "last_date": "2026-11-18",
    "ath": 9.33,
    "ath_date": "2026-08-17",
-   "below_ath_pct": 3.3,
+   "below_ath_pct": 3.2,
    "high_52w": 9.33,
-   "below_52w_pct": 3.3,
+   "below_52w_pct": 3.2,
    "sma200": 8.8,
    "vs_sma200_pct": 2.5,
-   "change_1m_pct": 0.0,
-   "ytd_pct": 15.9,
+   "change_1m_pct": 0.1,
+   "ytd_pct": 16.0,
    "ytd_base_date": "2025-12-30",
    "history_start": "2018-04-26",
    "verdict": "No signal",
@@ -1334,8 +1334,8 @@
      "drawdown_pct": -0.98
     },
     {
-     "date": "2026-11-17",
-     "drawdown_pct": -3.33
+     "date": "2026-11-18",
+     "drawdown_pct": -3.24
     }
    ],
    "thresholds": {
@@ -1350,24 +1350,24 @@
    "fund_held": "Vanguard Emerging Markets Stock Index Fund EUR Acc (IE0031786696)",
    "ticker": "IS3N.DE",
    "currency": "EUR",
-   "last_close": 43.21,
-   "last_date": "2026-11-17",
+   "last_close": 43.24,
+   "last_date": "2026-11-18",
    "ath": 50.69,
    "ath_date": "2026-06-22",
-   "below_ath_pct": 14.8,
+   "below_ath_pct": 14.7,
    "high_52w": 50.69,
-   "below_52w_pct": 14.8,
-   "sma200": 45.58,
+   "below_52w_pct": 14.7,
+   "sma200": 45.59,
    "vs_sma200_pct": -5.2,
-   "change_1m_pct": -6.8,
+   "change_1m_pct": -6.7,
    "ytd_pct": 12.7,
    "ytd_base_date": "2025-12-30",
    "history_start": "2014-06-11",
-   "verdict": "INVEST signal: 14.8% below ATH",
+   "verdict": "INVEST signal: 14.7% below ATH",
    "tier": "INVEST",
    "level": "invest",
    "supporting": [
-    "14.8% below 52-week high",
+    "14.7% below 52-week high",
     "5.2% below 200-day MA"
    ],
    "source": "live",
@@ -1998,8 +1998,8 @@
      "drawdown_pct": -11.22
     },
     {
-     "date": "2026-11-17",
-     "drawdown_pct": -14.76
+     "date": "2026-11-18",
+     "drawdown_pct": -14.7
     }
    ],
    "thresholds": {
